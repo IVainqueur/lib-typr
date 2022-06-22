@@ -1,0 +1,42 @@
+{
+  "name": "lib-typr",
+  "version": "1.0.1",
+  "description": "A ReactJS Component Library making forms more intuitive. For now, you can make fields appear in a sequence and the text typed out with a custom randomWait between characters",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "build-lib": "rollup -c"
+  },
+  "author": "Vainqueur ISHIMWE",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.18.5",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/builder-webpack4": "^6.5.9",
+    "@storybook/manager-webpack4": "^6.5.9",
+    "@storybook/react": "^6.5.9",
+    "@storybook/testing-library": "^0.0.13",
+    "babel-loader": "^8.2.5",
+    "gsap": "^3.10.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^2.75.7",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "uuid": "^8.3.2"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.18.5",
+    "gsap": "^3.10.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "uuid": "^8.3.2"
+  }
+}
