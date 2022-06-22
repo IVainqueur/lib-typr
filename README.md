@@ -34,4 +34,8 @@ export default App = () => {
     )
 }
 ```
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
 
+## Github repo
+You can check out my [github](https://github.com/IVainqueur) for more experimental projects like this
