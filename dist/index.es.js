@@ -40,12 +40,12 @@ const TyprElement = ({
        */
       if (!onDisplay.length) return;
 
-      if (!onDisplay[onDisplay.length - 1].props.requiredText) {
+      if (!onDisplay[onDisplay.length - 1].props.requiredtext) {
         await wait(150);
         return;
       }
 
-      if (onDisplay[onDisplay.length - 1].props.children == onDisplay[onDisplay.length - 1].props.requiredText) {
+      if (onDisplay[onDisplay.length - 1].props.children == onDisplay[onDisplay.length - 1].props.requiredtext) {
         setToDisplay(onDisplay);
         return;
       }
@@ -55,9 +55,9 @@ const TyprElement = ({
         let others = prev.slice(0, onDisplay.length - 1);
         let currentEl = onDisplay[onDisplay.length - 1];
         let currentText = onDisplay[onDisplay.length - 1].props.children;
-        let requiredText = onDisplay[onDisplay.length - 1].props.requiredText;
+        let requiredtext = onDisplay[onDisplay.length - 1].props.requiredtext;
         let toShow = /*#__PURE__*/React.createElement(currentEl.type, { ...currentEl.props
-        }, requiredText.slice(0, currentText.length + 1));
+        }, requiredtext.slice(0, currentText.length + 1));
         return [...others, toShow];
       });
     })();
@@ -97,7 +97,7 @@ const TyprElement = ({
         }
 
         let toShow = /*#__PURE__*/React.createElement(nextChild.type, {
-          requiredText: newString,
+          requiredtext: newString,
           ...nextChild.props
         }, nextChild.props.children[0]);
         setOnDisplay(prev => [...prev, toShow]);

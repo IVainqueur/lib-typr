@@ -1,18 +1,23 @@
 import React, { useEffect, useState, useContext } from "react";
-import { getType, randomWait, wait } from "../../oneliners/oneliners";
-import {TyprFormContext} from '../TyprForm/TyprForm.jsx'
+import { getDataType, randomWait, wait } from "../../oneliners/oneliners";
+import { TyprFormContext } from "../TyprForm/TyprForm.jsx";
 
 let hasChildren = false;
 
-const TyprElement = ({ children, parent_unique_key, nextElement, randomWaitInterval }) => {
+const TyprElement = ({
+    children,
+    parent_unique_key,
+    nextElement,
+    randomWaitInterval,
+}) => {
     const [onDisplay, setOnDisplay] = useState([]);
     const [toDisplay, setToDisplay] = useState([]);
-    const [forms, setForms,] = useContext(TyprFormContext);
+    const [forms, setForms] = useContext(TyprFormContext);
     useEffect(() => {
         /**
          * First check if the element has children
          */
-        let type = getType(children.props.children);
+        let type = getDataType(children.props.children);
         hasChildren = ["Array", "Object"].includes(type);
     }, []);
 
@@ -22,29 +27,42 @@ const TyprElement = ({ children, parent_unique_key, nextElement, randomWaitInter
              * CHECK If the current variable has all the text written out
              */
             if (!onDisplay.length) return;
-            if (!onDisplay[onDisplay.length - 1].props.requiredText) {
+            let currentElement = onDisplay[onDisplay.length - 1];
+            if (!onDisplay[onDisplay.length - 1].props.requiredtext) {
                 await wait(150);
-                return;
+                let isTextField = ["input", "textarea"].includes(
+                    currentElement.type
+                );
+                let hasTriggerNext = currentElement.props.triggerNext === true;
+                if ((isTextField) || (hasTriggerNext)) return; /* Return and wait for nextTrigger */
+                
+                setToDisplay(onDisplay);
+                return; 
             }
             if (
                 onDisplay[onDisplay.length - 1].props.children ==
-                onDisplay[onDisplay.length - 1].props.requiredText
+                onDisplay[onDisplay.length - 1].props.requiredtext
             ) {
                 setToDisplay(onDisplay);
                 return;
             }
-            await wait(randomWait(randomWaitInterval.min, randomWaitInterval.max));
+
+            /* Check if the  */
+
+            await wait(
+                randomWait(randomWaitInterval.min, randomWaitInterval.max)
+            );
             setOnDisplay((prev) => {
                 let others = prev.slice(0, onDisplay.length - 1);
                 let currentEl = onDisplay[onDisplay.length - 1];
                 let currentText =
                     onDisplay[onDisplay.length - 1].props.children;
-                let requiredText =
-                    onDisplay[onDisplay.length - 1].props.requiredText;
+                let requiredtext =
+                    onDisplay[onDisplay.length - 1].props.requiredtext;
                 let toShow = React.createElement(
                     currentEl.type,
                     { ...currentEl.props },
-                    requiredText.slice(0, currentText.length + 1)
+                    requiredtext.slice(0, currentText.length + 1)
                 );
                 return [...others, toShow];
             });
@@ -53,8 +71,18 @@ const TyprElement = ({ children, parent_unique_key, nextElement, randomWaitInter
 
     useEffect(() => {
         (async () => {
-            if (!hasChildren) return;
-            let isOne = getType(children.props.children) === "Object";
+            // console.log(children);
+            if (!hasChildren) {
+                console.log("HAS NO CHILDREN");
+                return;
+            }
+            if (children.props.children.length === onDisplay.length) {
+                console.log("ENOUGH CHILDREN");
+                nextElement(setForms, parent_unique_key);
+                return;
+            }
+            // console.log(children)
+            let isOne = getDataType(children.props.children) === "Object";
             if (isOne && onDisplay.length == 1) {
                 nextElement(setForms, parent_unique_key);
                 return;
@@ -66,10 +94,17 @@ const TyprElement = ({ children, parent_unique_key, nextElement, randomWaitInter
                 ? children.props.children
                 : children.props.children[onDisplay.length];
             /**
+             * Check if the current child has no props
+             */
+            //  if(Object.keys(nextChild.props).length === 0){
+            //     nextElement(setForms, parent_unique_key);
+            //     return;
+            // }
+            /**
              * Check if the current child to display has text content
              */
             let contentIsString =
-                getType(nextChild.props.children) === "String";
+                getDataType(nextChild.props.children) === "String";
             /**
              * If the content is of string type, then...
              */
@@ -82,11 +117,14 @@ const TyprElement = ({ children, parent_unique_key, nextElement, randomWaitInter
                         ? forms[parent_unique_key].variables[result[2]]
                         : result[0];
 
-                    newString = newString.slice(0, result.index) + fillIn + newString.slice(result.index + result[0].length);
+                    newString =
+                        newString.slice(0, result.index) +
+                        fillIn +
+                        newString.slice(result.index + result[0].length);
                 }
                 let toShow = React.createElement(
                     nextChild.type,
-                    { requiredText: newString, ...nextChild.props },
+                    { requiredtext: newString, ...nextChild.props },
                     nextChild.props.children[0]
                 );
                 setOnDisplay((prev) => [...prev, toShow]);
@@ -95,7 +133,7 @@ const TyprElement = ({ children, parent_unique_key, nextElement, randomWaitInter
             }
         })();
     }, [toDisplay]);
-    return <div className="TyprElement">{onDisplay}</div>;
+    return <>{onDisplay}</>;
 };
 
-export {TyprElement};
+export { TyprElement };

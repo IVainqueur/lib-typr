@@ -4,7 +4,7 @@ export const wait = (duration)=>{
     })
 }
 
-export const getType = (value)=>{
+export const getDataType = (value)=>{
     return Object.prototype.toString.call(value).slice(1, -1).split(' ')[1]
 }
 

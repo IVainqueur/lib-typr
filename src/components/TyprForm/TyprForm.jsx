@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, createContext } from "react";
 // import { gsap } from "gsap";
 // import { TyprFormContext } from "../../../stories/TyprForm.stories";
 import { TyprElement } from "../TyprElement/TyprElement.jsx";
-import { getType } from "../../oneliners/oneliners";
+import { getDataType } from "../../oneliners/oneliners";
 import { v4 } from "uuid";
 
 export const TyprFormContext = createContext();
@@ -34,7 +34,7 @@ const checkForNextTrigger = (children, setForms, unique_key) => {
     let newChildren = [];
     for (let child of children) {
         /* Check if it has children */
-        if (getType(child.props.children) == "Array") {
+        if (getDataType(child.props.children) == "Array") {
             let checkedChildren = checkForNextTrigger(
                 child.props.children,
                 setForms,
@@ -44,7 +44,7 @@ const checkForNextTrigger = (children, setForms, unique_key) => {
                 ...child.props,
                 children: checkedChildren,
             });
-        } else if (getType(child.props.children) == "Object") {
+        } else if (getDataType(child.props.children) == "Object") {
             let checkedChildren = checkForNextTrigger(
                 [child.props.children],
                 setForms,
@@ -91,13 +91,13 @@ export const TyprForm = ({
     const unique_key = useMemo(() => v4(), []);
     useEffect(() => {
         //Check if children is an array or object
-        let param = getType(children) === "Array" ? children : [children];
+        let param = getDataType(children) === "Array" ? children : [children];
         children = checkForNextTrigger(param, setForms, unique_key);
         if (!children)
             return () => {
                 console.log("SHIT");
             };
-        let type = getType(children);
+        let type = getDataType(children);
 
         if (type != "Array") {
             children = [children];
@@ -137,7 +137,7 @@ export const TyprForm = ({
 
 function parseChildren(children, parent_unique_key, randomWait) {
     return children.map((child) => {
-        if (getType(child.props.children) == "String") {
+        if (getDataType(child.props.children) == "String") {
             return (
                 <TyprElement
                     nextElement={nextElement}

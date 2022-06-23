@@ -1,9 +1,16 @@
 {
   "name": "lib-typr",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A ReactJS Component Library making forms more intuitive. For now, you can make fields appear in a sequence and the text typed out with a custom randomWait between characters",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "keywords": [
+    "reactjs",
+    "react",
+    "typr",
+    "typing effect",
+    "text animation"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
@@ -19,6 +26,7 @@
     "@storybook/addon-essentials": "^6.5.9",
     "@storybook/addon-interactions": "^6.5.9",
     "@storybook/addon-links": "^6.5.9",
+    "@storybook/addon-postcss": "^2.0.0",
     "@storybook/builder-webpack4": "^6.5.9",
     "@storybook/manager-webpack4": "^6.5.9",
     "@storybook/react": "^6.5.9",

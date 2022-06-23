@@ -16,7 +16,7 @@ export default App = () => {
         <TyprForm variables={["name", "age", "profession"]}>
             <h1>Title of all of this</h1>
             <div className="Field">
-                <h1>What is your name again?</h1>
+                <h1>What is your name?</h1>
                 <input type={"text"} triggerNext={true} name="name" />
 
             </div>
@@ -25,7 +25,7 @@ export default App = () => {
                 <input type={"text"} triggerNext={true} name="age" />
             </div>
             <div className="Field">
-                <h1>%name% being %age%, What is profession?</h1>
+                <h1>%name% being %age%, What is your profession?</h1>
                 <input type={"text"} triggerNext={true} name="profession" />
             </div>
             <p>%name% is %age% and interested in %profession%</p>
